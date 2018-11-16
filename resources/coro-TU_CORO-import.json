@@ -1,0 +1,29 @@
+{
+  "cantos" : {
+    "despedida" : {
+      "envio" : 9999,
+      "extra" : "3112",
+      "maria" : "3593",
+      "villancico" : 9999
+    },
+    "fecha" : "2018-11-10",
+    "liturgia_eucaristica" : {
+      "comunion" : "3461",
+      "ofertorio" : "3467",
+      "padrenuestro" : 9999,
+      "paz" : 9999,
+      "santo" : "3285"
+    },
+    "liturgia_palabra" : {
+      "aleluya" : "3235",
+      "antifona" : 9999
+    },
+    "mensaje" : "Celebraci√≥n t√pica en Castilleja",
+    "rito_inicial" : {
+      "entrada" : "2864",
+      "gloria" : 9999,
+      "perdon" : 9999
+    }
+  }
+}
+
