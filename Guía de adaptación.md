@@ -27,7 +27,7 @@ https://pilgrim.neocities.org/coros/castilleja/www/index.html
 
 Pero puedes adaptarlo a otro sitio, otro dominio, e incluso usar tu propio PC.  
 
-Desde el repositorio del proyecto en GitHub, https://github.com/luisgentil/Coros/, descarga el proyecto como un *.zip.  
+Desde el repositorio del proyecto en GitHub, https://github.com/luisgentil/coros/, descarga el proyecto como un *.zip.  
 Descomprime los ficheros en una carpeta del disco duro.  
 Desde tu dominio en neocities, "Edit site", crea una carpeta con el nombre de tu coro; desde ahí, pulsa "Upload" y sube tu carpeta descomprimida.  
 
