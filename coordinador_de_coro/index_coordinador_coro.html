@@ -2,6 +2,7 @@
 <html> 
 <head>
 <meta charset="utf-8"/> 
+<meta name="version" content="1.1">                      
 <title>Coordinadoción de Coro</title>
 <link rel="stylesheet" type="text/css" href="css/estilo_coro_desk.css" />
 <script src="https://www.gstatic.com/firebasejs/4.7.0/firebase.js"></script>
@@ -41,6 +42,8 @@ Fecha:<input id="fecha_elegida" type="date" value="mm-dd-aaaa" onblur='grabaFech
   <h3 id="canto_seleccionado">##</h3>
   <h3 id='id_seleccionado'>##</h3>
   <h3 id="resultado_consulta">##</h3>
+  <h3><a href="https://console.firebase.google.com/u/0/project/[YOUR VALUE HERE]/database/[YOUR VALUE HERE]/rules" target="_blank"><span id="permisos" class="">lectura/escritura</span></a></h3>
+
 </div>
 
 <div id="contenidos">
@@ -81,7 +84,7 @@ Fecha:<input id="fecha_elegida" type="date" value="mm-dd-aaaa" onblur='grabaFech
 <div id="seccionSeleccion" class="seleccionClase">Cantos seleccionados
 <button onclick ='grabarFirebase("cantos", listaAlternativa)'>Grabar Misa dafault</button>
 <button onclick ='grabarFirebase("cantos", listaVacia)'>Anular todo - todo</button>
-<button onclick="enviarCantos()" class="">Grabar todo</button>
+<button onclick="enviarCantos()" class="">Grabar Seleccionados</button>
   <div id=""   class=""><span id="OrdenA">-</span> <span id="seleccionA">-</span></div> 
   <div id=""   class=""><span id="OrdenB">-</span> <span id="seleccionB">-</span></div> 
   <div id=""   class=""><span id="OrdenC">-</span> <span id="seleccionC">-</span></div> 
@@ -100,6 +103,8 @@ Fecha:<input id="fecha_elegida" type="date" value="mm-dd-aaaa" onblur='grabaFech
 </div>
 
 <script type="text/javascript">
+
+var test = {"test": "ok"};
 
 var cantosHoy = {
   "fecha" : "01/01/1999",
@@ -170,7 +175,7 @@ for (seccion in secciones) {
   }
 
 
-	// Descarga la lista de cantos prevista para la celebración  // ***** ¿ ESTO SIRVE O NO? ****** \\
+/*	// Descarga la lista de cantos prevista para la celebración  // ***** ¿ ESTO SIRVE O NO? ****** \\
 	function buscarFirebase(codigoDeMiCoro, momentoLiturgia, dato) {
 		var databaseService = firebase.database();
 		var ref = databaseService.ref();
@@ -178,7 +183,7 @@ for (seccion in secciones) {
 		ref.child(dato.toLowerCase()).on("value", function(snapshot){resultado = (snapshot.val() || null);
 		document.getElementById('resultado_consulta').innerText = resultado.despedida.extra;
 		});
-	};
+	};*/
 
 	function grabarFirebase(codigoDeMiCoro, listaDeCantos) {
 		var databaseService = firebase.database();
@@ -194,9 +199,31 @@ for (seccion in secciones) {
             .then(function() {
                 console.log('lista almacenada correctamente');
                 document.getElementById("resultado_consulta").textContent = "correcto";
+                comprobarPermisos("cantos", test);
     	        })
             .catch(function(error) {
                 console.log('detectado un error', error);
+                document.getElementById("resultado_consulta").textContent = "error de grabación";
+
+            });
+    };
+
+    // probamos a grabar algo, para comprobar los permisos
+  function comprobarPermisos(codigoDeMiCoro, test) {
+    var databaseService = firebase.database();
+    var referencia = databaseService.ref(codigoDeMiCoro);
+    referencia.update(test);
+      console.log(test);
+      referencia.update(test)
+            .then(function() {
+                console.log('test: permite escritura');
+                document.getElementById("permisos").textContent = "peligro: write = true";
+                document.getElementById('permisos').classList.toggle('peligro'); 
+              })
+            .catch(function(error) {
+                console.log('test: NO escritura');
+                document.getElementById("permisos").textContent = "seguro: write = false";
+                document.getElementById('permisos').classList.toggle('permisos'); 
             });
     };
 
@@ -227,7 +254,7 @@ for (seccion in secciones) {
       console.log(laSeccion);
       }
     else {
-      var laSeccionSelecionada = "Orden" + laSeccion;;
+      var laSeccionSelecionada = "Orden" + laSeccion;
       var laIdSelecionada      = "seleccion" + laSeccion;
       }
     document.getElementById(laSeccionSelecionada).innerText = laSeccion + OrdenDelCanto;
@@ -250,5 +277,11 @@ function grabaFechaText() {
     console.log("hey");
     grabarFirebase("cantos", cantosHoy);
   }
+  
+  window.onload = function() {
+    console.log("on load ok");
+    comprobarPermisos("cantos", test);
+  }
+
 </script>
 </body>
